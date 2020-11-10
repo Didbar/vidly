@@ -15,7 +15,7 @@ class Movies extends Component {
 
         const moviescomponent = this.state.movies.map((movie) => {
             return (
-                <tr key={movie._id} className="m-2">
+                <tr key={movie._id}>
                     <th scope="row">{movie.title}</th>
                     <th>{movie.genre.name}</th>
                     <th>{movie.numberInStock}</th>

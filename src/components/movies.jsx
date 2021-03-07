@@ -6,6 +6,7 @@ import Pagination from "./common/pagination";
 import paginate from "../utils/paginate";
 import MoviesTable from "./moviesTable";
 import _ from "lodash";
+import NoData from "./common/noData";
 
 class Movies extends Component {
   state = {
@@ -86,37 +87,35 @@ class Movies extends Component {
       sortColumn,
     } = this.state;
 
-    if (count === 0) return <p>There Are No Movies In Database</p>;
+    if (count === 0) return <NoData />;
 
-    const { totalCount, data } = this.getPageData();
+    const { totalCount, data: movies } = this.getPageData();
     return (
-      <main className="container">
-        <div className="row">
-          <div className="col-2">
-            <ListGroup
-              items={genres}
-              selectedItem={selectedGenre}
-              onItemSelect={this.handleGenreSelect}
-            />
-          </div>
-          <div className="col">
-            <MoviesTable
-              moviesCount={totalCount}
-              sortColumn={sortColumn}
-              movies={data}
-              onLike={this.handleLike}
-              onDelete={this.handleDelete}
-              onSort={this.handleSort}
-            />
-            <Pagination
-              moviesCount={totalCount}
-              pageSize={pageSize}
-              currentPage={currentPage}
-              onPageChange={this.handlePageChange}
-            />
-          </div>
+      <div className="row">
+        <div className="col-2">
+          <ListGroup
+            items={genres}
+            selectedItem={selectedGenre}
+            onItemSelect={this.handleGenreSelect}
+          />
         </div>
-      </main>
+        <div className="col">
+          <MoviesTable
+            moviesCount={totalCount}
+            sortColumn={sortColumn}
+            movies={movies}
+            onLike={this.handleLike}
+            onDelete={this.handleDelete}
+            onSort={this.handleSort}
+          />
+          <Pagination
+            itemsCount={totalCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
+          />
+        </div>
+      </div>
     );
   }
 }

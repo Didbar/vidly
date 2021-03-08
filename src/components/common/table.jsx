@@ -6,7 +6,7 @@ const Table = ({ itemsCount, data, sortColumn, onSort, columns }) => {
   return (
     <table className="table table-hover">
       <caption style={{ captionSide: "top" }}>
-        Showing {itemsCount} Movies in The Database
+        Showing {itemsCount} Entries in Database
       </caption>
       <TableHeader columns={columns} sortColumn={sortColumn} onSort={onSort} />
       <TableBody data={data} columns={columns} />

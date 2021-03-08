@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getMovies } from "../services/fakeMovieService";
+import { getMovies, deleteMovie } from "../services/fakeMovieService";
 import { getGenres } from "../services/fakeGenreService";
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
@@ -7,6 +7,7 @@ import paginate from "../utils/paginate";
 import MoviesTable from "./moviesTable";
 import _ from "lodash";
 import NoData from "./common/noData";
+import { Link } from "react-router-dom";
 
 class Movies extends Component {
   state = {
@@ -29,6 +30,8 @@ class Movies extends Component {
   handleDelete = (movie) => {
     const movies = this.state.movies.filter((m) => m !== movie);
     this.setState({ movies });
+
+    deleteMovie(movie._id);
   };
 
   handleLike = (movie) => {
@@ -100,6 +103,14 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
+          <Link
+            to="/movies/new"
+            className="btn btn-primary"
+            style={{ marginBottom: 20 }}
+          >
+            New Movie
+          </Link>
+
           <MoviesTable
             moviesCount={totalCount}
             sortColumn={sortColumn}

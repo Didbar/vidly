@@ -10,12 +10,12 @@ const Pagination = (props) => {
   const pages = _.range(1, pagesCount + 1);
 
   return (
+    /* eslint-disable jsx-a11y/anchor-is-valid */
     <nav aria-label="Page navigation example">
       <ul className="pagination justify-content-start">
         <li className={currentPage === 1 ? "page-item disabled" : "page-item"}>
           <a
             className="page-link"
-            href="!#"
             onClick={() => onPageChange(currentPage - 1)}
           >
             <span aria-hidden="true">&laquo;</span>
@@ -26,11 +26,7 @@ const Pagination = (props) => {
             key={page}
             className={page === currentPage ? "page-item active" : "page-item"}
           >
-            <a
-              href="!#"
-              onClick={() => onPageChange(page)}
-              className="page-link"
-            >
+            <a onClick={() => onPageChange(page)} className="page-link">
               {page}
             </a>
           </li>

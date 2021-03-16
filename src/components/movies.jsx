@@ -8,6 +8,7 @@ import MoviesTable from "./moviesTable";
 import _ from "lodash";
 import NoData from "./common/noData";
 import { Link } from "react-router-dom";
+import SearchBox from "./common/searchBox";
 
 class Movies extends Component {
   state = {
@@ -17,6 +18,7 @@ class Movies extends Component {
     currentPage: 1,
     selectedGenre: {},
     sortColumn: { path: "title", order: "asc" },
+    searchQuery: "",
   };
 
   componentDidMount() {
@@ -52,11 +54,20 @@ class Movies extends Component {
     this.setState({
       currentPage: 1,
       selectedGenre: genre,
+      searchQuery: "",
     });
   };
 
   handleSort = (sortColumn) => {
     this.setState({ sortColumn });
+  };
+
+  handleSearch = (query) => {
+    this.setState({
+      searchQuery: query,
+      selectedGenre: null,
+      currentPage: 1,
+    });
   };
 
   getPageData = () => {
@@ -66,12 +77,16 @@ class Movies extends Component {
       selectedGenre,
       sortColumn,
       movies,
+      searchQuery,
     } = this.state;
 
-    const filtered =
-      selectedGenre && selectedGenre._id
-        ? movies.filter((m) => m.genre._id === selectedGenre._id)
-        : movies;
+    let filtered = movies;
+    if (searchQuery)
+      filtered = movies.filter((m) =>
+        m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    else if (selectedGenre && selectedGenre._id)
+      filtered = movies.filter((m) => m.genre._id === selectedGenre._id);
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
@@ -88,6 +103,7 @@ class Movies extends Component {
       currentPage,
       selectedGenre,
       sortColumn,
+      searchQuery,
     } = this.state;
 
     if (count === 0) return <NoData />;
@@ -110,6 +126,7 @@ class Movies extends Component {
           >
             New Movie
           </Link>
+          <SearchBox value={searchQuery} onChange={this.handleSearch} />
 
           <MoviesTable
             moviesCount={totalCount}

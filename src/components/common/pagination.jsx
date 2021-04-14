@@ -38,7 +38,6 @@ const Pagination = (props) => {
         >
           <a
             className="page-link"
-            href="!#"
             onClick={() => onPageChange(currentPage + 1)}
           >
             <span aria-hidden="true">&raquo;</span>

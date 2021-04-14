@@ -20,3 +20,8 @@ code {
 .clickable {
   cursor: pointer;
 }
+
+.pagination > li {
+  cursor: pointer;
+  user-select: none;
+}
